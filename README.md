@@ -6,7 +6,7 @@
 
 ## Team Members (GitHub)
 - Tobin Lock (T0BlN)
-- 
+- Daniil Koval
 - 
 - 
 
