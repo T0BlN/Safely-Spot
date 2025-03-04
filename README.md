@@ -8,7 +8,7 @@
 - Tobin Lock (T0BlN)
 - Daniil Koval
 - Rohan Malvi (malvi07)
-- Varun Gupta
+- Varun Gupta (varungupta09)
 
 ---
 
