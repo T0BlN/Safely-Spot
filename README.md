@@ -7,7 +7,7 @@
 ## Team Members (GitHub)
 - Tobin Lock (T0BlN)
 - Daniil Koval
-- Rohan Malvi
+- Rohan Malvi (malvi07)
 - Varun Gupta
 
 ---
