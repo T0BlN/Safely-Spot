@@ -1,38 +1,54 @@
-# Safely Spot
+# React + TypeScript + Vite
 
-> **Team Name**: SafeNet
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
----
+Currently, two official plugins are available:
 
-## Team Members (GitHub)
-- Tobin Lock (T0BlN)
-- Daniil Koval (danilkoval1337)
-- Rohan Malvi (malvi07)
-- Varun Gupta (varungupta09)
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
----
+## Expanding the ESLint configuration
 
-## Overview
+If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
 
-**Safely Spot** is a community-driven neighborhood watch application designed to help residents report, discuss, and stay informed about local incidents and safety concerns in their area. The platform combines an interactive map interface with social discussion features, allowing users to drop pins on a map to report incidents, discuss events in real-time, and collaborate to keep their neighborhood safe.
+```js
+export default tseslint.config({
+  extends: [
+    // Remove ...tseslint.configs.recommended and replace with this
+    ...tseslint.configs.recommendedTypeChecked,
+    // Alternatively, use this for stricter rules
+    ...tseslint.configs.strictTypeChecked,
+    // Optionally, add this for stylistic rules
+    ...tseslint.configs.stylisticTypeChecked,
+  ],
+  languageOptions: {
+    // other options...
+    parserOptions: {
+      project: ['./tsconfig.node.json', './tsconfig.app.json'],
+      tsconfigRootDir: import.meta.dirname,
+    },
+  },
+})
+```
 
----
+You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-## Key Features
+```js
+// eslint.config.js
+import reactX from 'eslint-plugin-react-x'
+import reactDom from 'eslint-plugin-react-dom'
 
-1. **Interactive Map**  
-Users can pan, zoom, and explore a dynamic map of their neighborhood, with the ability to drop pins to report incidents such as suspicious activity, vandalism, or lost pets.
-
-2. **Incident Reporting**  
-Residents can create new incident reports by filling out a form with details like title, description, category, and optional photo evidence.
-
-3. **Community Forum**  
-Each reported incident has a dedicated discussion page, where users can comment, share updates, and collaborate on solutions.
-
-4. **User Profiles**  
-Each user has a profile page showing their reported incidents and contributions to the community.
-
----
-
-## Placeholder for further instructions
-Content here
+export default tseslint.config({
+  plugins: {
+    // Add the react-x and react-dom plugins
+    'react-x': reactX,
+    'react-dom': reactDom,
+  },
+  rules: {
+    // other rules...
+    // Enable its recommended typescript rules
+    ...reactX.configs['recommended-typescript'].rules,
+    ...reactDom.configs.recommended.rules,
+  },
+})
+```
