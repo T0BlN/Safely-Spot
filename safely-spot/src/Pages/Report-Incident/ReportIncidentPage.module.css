@@ -1,0 +1,38 @@
+.reportIncidentPage {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+   .reportIncidentPage h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+   .reportIncidentPage form {
+    display: flex;
+    flex-direction: column;
+  }
+   .reportIncidentPage form > div {
+    margin-bottom: 1rem;
+  }
+   .reportIncidentPage label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+  }
+   .reportIncidentPage input[type="text"],
+  .reportIncidentPage textarea,
+  .reportIncidentPage input[type="file"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+   .buttonGroup {
+    display: flex;
+    justify-content: space-between;
+  }
+ 
