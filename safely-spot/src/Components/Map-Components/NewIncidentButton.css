@@ -1,0 +1,20 @@
+.add-incident-button {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    font-size: 2rem;
+    line-height: 1;
+    padding: 9px 15px;
+    cursor: pointer;
+    border: 2px solid #000;
+    border-radius: 50%;
+    background-color: #4CAF50;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 1000;
+}
+
+.add-incident-button:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
