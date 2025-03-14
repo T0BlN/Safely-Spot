@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import SettingsButton from '../../Components/Report-Incident/Settings-Button.tsx';
 
+
+
 function SettingsPage() {
     return (
         <div className='settingsContainer'>
