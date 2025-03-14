@@ -1,0 +1,46 @@
+.comment-list {
+  margin-top: 20px;
+}
+
+.comment-list h3 {
+  margin-bottom: 15px;
+}
+
+.comment-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.comment-item {
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.comment-author {
+  font-weight: bold;
+}
+
+.comment-time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.comment-text {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.no-comments {
+  font-style: italic;
+  color: #666;
+}

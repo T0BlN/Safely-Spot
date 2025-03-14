@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import SettingsButton from '../Components/Settings-Button.tsx';
+import SettingsButton from '../../Components/Report-Incident/Settings-Button.tsx'
 
 function SettingsPage() {
     return (
