@@ -10,9 +10,11 @@ interface Comment {
 
 interface CommentListProps {
   comments: Comment[];
+  sortOrder: 'newest' | 'oldest';
+  onSortChange: (sortOrder: 'newest' | 'oldest') => void;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+const CommentList: React.FC<CommentListProps> = ({ comments, sortOrder, onSortChange }) => {
   const formatTimestamp = (timestamp: string) => {
     const date = new Date(timestamp);
     return date.toLocaleString();
@@ -20,7 +22,20 @@ const CommentList: React.FC<CommentListProps> = ({ comments }) => {
   
   return (
     <div className="comment-list">
-      <h3>Comments ({comments.length})</h3>
+      <div className="comment-header-with-sort">
+        <h3>Comments ({comments.length})</h3>
+        <div className="sort-controls">
+          <span>Sort by: </span>
+          <select 
+            value={sortOrder}
+            onChange={(e) => onSortChange(e.target.value as 'newest' | 'oldest')}
+            className="sort-select"
+          >
+            <option value="newest">Newest first</option>
+            <option value="oldest">Oldest first</option>
+          </select>
+        </div>
+      </div>
       {comments.length === 0 ? (
         <p className="no-comments">No comments yet. Be the first to comment!</p>
       ) : (

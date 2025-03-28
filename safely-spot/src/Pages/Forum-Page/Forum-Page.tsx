@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import CommentForm from '../../Components/Forum-Components/CommentForm';
 import CommentList from '../../Components/Forum-Components/CommentList';
 import IncidentDetails from '../../Components/Forum-Components/IncidentDetails';
@@ -33,6 +33,7 @@ const ForumPage: React.FC = () => {
   const { incidentId } = useParams<{ incidentId: string }>();
   const navigate = useNavigate();
   const [comments, setComments] = useState(initialComments);
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
   
   const handleAddComment = (commentText: string) => {
     const newComment = {
@@ -49,11 +50,27 @@ const ForumPage: React.FC = () => {
     navigate('/');
   };
 
+  const handleSortChange = (newSortOrder: 'newest' | 'oldest') => {
+    setSortOrder(newSortOrder);
+  };
+
+  const sortedComments = useMemo(() => {
+    return [...comments].sort((a, b) => {
+      const dateA = new Date(a.timestamp).getTime();
+      const dateB = new Date(b.timestamp).getTime();
+      return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
+    });
+  }, [comments, sortOrder]);
+
   return (
     <div className="forum-page">
       <button className="back-button" onClick={handleBack}>Back to Map</button>
       <IncidentDetails incident={mockIncident} />
-      <CommentList comments={comments} />
+      <CommentList 
+        comments={sortedComments} 
+        sortOrder={sortOrder}
+        onSortChange={handleSortChange}
+      />
       <CommentForm onAddComment={handleAddComment} />
     </div>
   );

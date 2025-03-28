@@ -2,8 +2,30 @@
   margin-top: 20px;
 }
 
-.comment-list h3 {
+.comment-header-with-sort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 15px;
+}
+
+.comment-list h3 {
+  margin-bottom: 0;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.sort-select {
+  margin-left: 8px;
+  padding: 4px 8px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .comment-list ul {
