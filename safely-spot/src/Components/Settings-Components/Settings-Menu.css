@@ -1,0 +1,52 @@
+.menu-toggle-button {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 1.5rem;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: #000;
+    border: 2px solid #000;
+    border-radius: 4px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    z-index: 1000;
+}
+
+.side-menu {
+    position: absolute;
+    top: 80px;
+    left: 0px;
+    background-color: #6b6b6b;
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    transform: translateX(-110%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.side-menu.open {
+    transform: translateX(0);
+}
+
+.side-menu button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    border: 2px solid #000;
+    border-radius: 4px;
+    background-color: #4CAF50;
+    color: #000;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.menu-toggle-button:hover,
+.side-menu button:hover {
+    transform: scale(1.1); 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
