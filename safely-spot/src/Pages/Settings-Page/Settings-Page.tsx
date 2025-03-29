@@ -1,15 +1,60 @@
-import {useState} from 'react';
-import SettingsButton from '../../Components/Report-Incident/Settings-Button.tsx'
+import './Settings-Page.css';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SettingsButton from '../../Components/Settings-Components/Settings-Button.tsx'
+import SettingsMenu from '../../Components/Settings-Components/Settings-Menu.tsx';
 
 function SettingsPage() {
+    const navigate = useNavigate();
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+    };
+
+    const goToCreateIncident = () => {
+        navigate('/report-incident');
+    };
+    
+    const goToAccount = () => {
+        navigate('/account');
+    };
+
+    const goToMap = () => {
+        navigate('/');
+    }
+
+    const goToLogIn = () => {
+        navigate('/login');
+    }
+
     return (
-        <div className='settingsContainer'>
-            <h1 className='settingsTitle'>Settings</h1>
-            <SettingsButton text="Use Your Location?" onClick={() => console.log("Using Your Location")}/>
-            <SettingsButton text="Your Saved Pins" onClick={() => console.log("Viewing Saved Pins")}/>
-            <SettingsButton text="Log In/Out" onClick={() => console.log("Logging In/Out")}/>
+        <div className="settings-page">
+            <div className="settings-card">
+                <div className="settings-header">
+                    <h1 className="settings-title">Settings</h1>
+                    <p className="settings-subtitle">Manage your account preferences</p>
+                </div>
+                
+                <div className="settings-menu-container">
+                    <SettingsMenu 
+                        onToggleMenu={toggleMenu} 
+                        goToMap={goToMap} 
+                        goToReport={goToCreateIncident} 
+                        menuOpen={menuOpen}
+                    />
+                </div>
+                
+                <div className="settings-buttons">
+                    <SettingsButton text="Profile" onClick={goToAccount} />
+                    <SettingsButton text="Use Your Location?" onClick={() => console.log("Using Your Location")} />
+                    <SettingsButton text="Your Saved Pins" onClick={() => console.log("Viewing Saved Pins")} />
+                    <SettingsButton text="Log In/Out" onClick={goToLogIn} />
+                </div>
+            </div>
         </div>
     )
 }
+
 
 export default SettingsPage;
