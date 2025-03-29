@@ -7,6 +7,8 @@ import SettingsPage from './Pages/Settings-Page/Settings-Page';
 import ForumPage from './Pages/Forum-Page/Forum-Page';
 import LoginPage from './Pages/Login-Page/LoginPage';
 import SignupPage from './Pages/Signup-Page/SignupPage';
+import StarredPinsPage from './Pages/Starred-Pins-Page/Starred-Pins-Page';
+import YourPinsPage from './Pages/Your-Pins-Page/Your-Pins-Page';
 
 const App: React.FC = () => {
   return (
@@ -17,6 +19,8 @@ const App: React.FC = () => {
       <Route path="/incident/:incidentId" element={<ForumPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      <Route path="/starred-pins" element={<StarredPinsPage />}/>
+      <Route path="/your-pins" element={<YourPinsPage/>}/>
     </Routes>
   );
 };

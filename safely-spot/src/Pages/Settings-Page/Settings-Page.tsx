@@ -28,6 +28,10 @@ function SettingsPage() {
         navigate('/login');
     }
 
+    const goToStarredPins = () => {
+        navigate('/starred-pins');
+    }
+
     return (
         <div className="settings-page">
             <div className="settings-card">
@@ -48,7 +52,7 @@ function SettingsPage() {
                 <div className="settings-buttons">
                     <SettingsButton text="Profile" onClick={goToAccount} />
                     <SettingsButton text="Use Your Location?" onClick={() => console.log("Using Your Location")} />
-                    <SettingsButton text="Your Saved Pins" onClick={() => console.log("Viewing Saved Pins")} />
+                    <SettingsButton text="Your Starred Pins" onClick={goToStarredPins} />
                     <SettingsButton text="Log In/Out" onClick={goToLogIn} />
                 </div>
             </div>

@@ -1,0 +1,125 @@
+/* StarredPostsPage.css */
+.starred-posts-page {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .page-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #2d3748;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .empty-state {
+    text-align: center;
+    color: #718096;
+    padding: 2rem;
+    background-color: #f7fafc;
+    border-radius: 0.5rem;
+  }
+  
+  .posts-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .post-card {
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .back-to-map-starred-pins {
+    background-color: #4CAF50;
+    color: #000;
+    border: 2px solid #000;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    font-weight: bold;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .back-to-map-starred-pins:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  }
+  
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+  
+  .username {
+    font-weight: 600;
+    color: #3182ce;
+    text-decoration: none;
+  }
+  
+  .username:hover {
+    text-decoration: underline;
+  }
+  
+  .post-date {
+    color: #718096;
+    font-size: 0.875rem;
+  }
+  
+  .post-content {
+    margin-bottom: 1rem;
+  }
+  
+  .post-content p {
+    margin: 0;
+    color: #4a5568;
+    line-height: 1.5;
+  }
+  
+  .post-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .star-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    transition: transform 0.2s ease;
+  }
+  
+  .star-button:hover {
+    transform: scale(1.1);
+  }
+  
+  .star-icon {
+    font-size: 1.25rem;
+    color: #cbd5e0;
+  }
+  
+  .star-icon.filled {
+    color: #f6ad55;
+  }
+  
+  .likes-count {
+    color: #718096;
+    font-size: 0.875rem;
+  }
