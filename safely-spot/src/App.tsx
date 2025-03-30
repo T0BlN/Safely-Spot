@@ -1,6 +1,6 @@
-// App.tsx
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import ProtectedRoute from './Components/Login-Page-Components/ProtectedRoute';
 import MapPage from './Pages/Map-Page/Map-Page';
 import ReportIncidentPage from './Pages/Report-Incident/ReportIncidentPage';
 import SettingsPage from './Pages/Settings-Page/Settings-Page';
@@ -13,14 +13,14 @@ import YourPinsPage from './Pages/Your-Pins-Page/Your-Pins-Page';
 const App: React.FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<MapPage />} />
-      <Route path="/report-incident" element={<ReportIncidentPage />} />
-      <Route path="/settings" element={<SettingsPage />} />
-      <Route path="/incident/:incidentId" element={<ForumPage />} />
+      <Route path="/" element={<ProtectedRoute><MapPage /></ProtectedRoute>} />
+      <Route path="/report-incident" element={<ProtectedRoute><ReportIncidentPage /></ProtectedRoute>} />
+      <Route path="/settings" element={<ProtectedRoute><SettingsPage /></ProtectedRoute>} />
+      <Route path="/incident/:incidentId" element={<ProtectedRoute><ForumPage /></ProtectedRoute>} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
-      <Route path="/starred-pins" element={<StarredPinsPage />}/>
-      <Route path="/your-pins" element={<YourPinsPage/>}/>
+      <Route path="/starred-pins" element={<ProtectedRoute><StarredPinsPage /></ProtectedRoute>}/>
+      <Route path="/your-pins" element={<ProtectedRoute><YourPinsPage /></ProtectedRoute>}/>
     </Routes>
   );
 };

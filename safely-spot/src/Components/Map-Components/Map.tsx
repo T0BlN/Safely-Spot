@@ -3,17 +3,13 @@ import { MapContainer, TileLayer, ZoomControl } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import './Map.css';
 import IncidentMarker from './IncidentMarker';
+import { useDataContext } from '../../Context/DataContext';
 
 const center = { lat: 42.3866, lng: -72.5314 };
 
-const mockIncident = {
-  id: '1',
-  position: [42.3866, -72.5314] as [number, number],
-  title: 'Fallen Tree on North Pleasant Street',
-  category: 'Hazard'
-};
-
 const Map: React.FC = () => {
+  const { pins } = useDataContext();
+  
   return (
     <div className="map-wrapper">
       <MapContainer
@@ -29,12 +25,15 @@ const Map: React.FC = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
-        <IncidentMarker 
-          id={mockIncident.id}
-          position={mockIncident.position}
-          title={mockIncident.title}
-          category={mockIncident.category}
-        />
+        {pins.map((pin) => (
+          <IncidentMarker
+            key={pin.id}
+            id={pin.id}
+            position={[pin.position.lat, pin.position.lng]}
+            title={pin.title}
+            category={pin.category}
+          />
+        ))}
       </MapContainer>
     </div>
   );
