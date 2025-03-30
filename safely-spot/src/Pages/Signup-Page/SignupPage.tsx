@@ -1,31 +1,31 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDataContext } from '../../Context/DataContext';
 import SubmitButton from '../../Components/Login-Page-Components/SubmitButton';
 import './SignupPage.css';
 
-interface User {
-  email: string;
-  password: string;
-}
-
 const SignupPage: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
+  const { users, addUser, setCurrentUser } = useDataContext();
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const users: User[] = JSON.parse(localStorage.getItem('users') || '[]');
 
-    if (users.find((u) => u.email === email)) {
-      alert('User already exists. Please login instead.');
+    if (users.some((u) => u.username === username)) {
+      alert('Username already exists. Please login instead.');
       return;
     }
 
-    const newUser: User = { email, password };
-    const updatedUsers = [...users, newUser];
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    const newUser = { username, password };
+    addUser(newUser);
+    const oneHour = 60 * 60 * 1000;
+    const expiresAt = Date.now() + oneHour;
     localStorage.setItem('currentUser', JSON.stringify(newUser));
+    localStorage.setItem('currentUserExpiresAt', expiresAt.toString());
+    setCurrentUser(newUser);
     navigate('/');
   };
 
@@ -34,10 +34,10 @@ const SignupPage: React.FC = () => {
       <h2>Sign Up</h2>
       <form onSubmit={handleSubmit}>
         <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
         <input
