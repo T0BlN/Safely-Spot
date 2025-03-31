@@ -19,7 +19,13 @@ const SignupPage: React.FC = () => {
       return;
     }
 
-    const newUser = { username, password };
+    const newUser = {
+      username,
+      password,
+      pins: [],
+      starredPins: [],
+      bio: ''
+    };
     addUser(newUser);
     const oneHour = 60 * 60 * 1000;
     const expiresAt = Date.now() + oneHour;
