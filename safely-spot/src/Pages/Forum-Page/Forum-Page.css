@@ -1,25 +1,97 @@
 .forum-page {
   max-width: 800px;
   margin: 2rem auto;
-  padding: 20px;
+  padding: 25px;
   background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border: 1px solid #e0e0e0;
+  position: relative;
+  background-image: linear-gradient(to bottom right, #f9f9f9 0%, #f1f1f1 100%);
+  background-size: 10px 10px;
 }
 
 .back-button {
   background-color: #4CAF50;
   color: #000;
   border: 2px solid #000;
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 10px 18px;
+  border-radius: 8px;
   cursor: pointer;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
   font-weight: bold;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s;
+}
+
+.back-button::before {
+  content: "←";
+  margin-right: 8px;
+  font-weight: bold;
 }
 
 .back-button:hover {
   transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background-color: #3ea142;
+}
+
+.back-button:active {
+  transform: scale(0.98);
+}
+
+/* Styling for the "Incident Not Found" state */
+.forum-page h2 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 1rem 0;
+  text-align: center;
+}
+
+/* Error message is centered but regular content is left-aligned */
+.forum-page p {
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Center only error message text */
+.forum-page:not(:has(.comment-list)) p {
+  text-align: center;
+}
+
+/* Comment text should be left-aligned */
+.comment-text {
+  text-align: left;
+}
+
+/* Add responsive styling */
+@media (max-width: 850px) {
+  .forum-page {
+    margin: 1rem;
+    padding: 20px;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .forum-page {
+    margin: 0.5rem;
+    padding: 15px;
+    border-radius: 8px;
+  }
+  
+  .back-button {
+    padding: 8px 14px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Add a light green tint when content is loading */
+.forum-page.loading {
+  background-color: #f0faf0;
 }
