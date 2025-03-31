@@ -1,6 +1,9 @@
 export interface User {
     username: string;
     password: string;
+    pins: Pin[];
+    starredPins: Pin[];
+    bio: string;
 }
 
 export interface Comment {
