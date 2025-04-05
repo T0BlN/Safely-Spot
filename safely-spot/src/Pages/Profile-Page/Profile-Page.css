@@ -80,8 +80,14 @@
     margin-bottom: 2rem;
   }
   
-  .profile-section {
+  .pins-section {
     margin-bottom: 1.5rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+    font-weight: 500;
+
   }
   
   .section-title {

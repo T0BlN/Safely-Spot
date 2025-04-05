@@ -28,8 +28,8 @@ const App: React.FC = () => {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       <Route path="/starred-pins" element={<ProtectedRoute><StarredPinsPage /></ProtectedRoute>}/>
-      <Route path="/your-pins" element={<ProtectedRoute><YourPinsPage /></ProtectedRoute>}/>
-      <Route path="/account" element={<ProtectedRoute><ProfilePage {...currentUser}/></ProtectedRoute>} />
+      <Route path="/pins/:username" element={<ProtectedRoute><YourPinsPage /></ProtectedRoute>}/>
+      <Route path="/account/:username" element={<ProtectedRoute><ProfilePage {...currentUser}/></ProtectedRoute>} />
     </Routes>
   );
 };

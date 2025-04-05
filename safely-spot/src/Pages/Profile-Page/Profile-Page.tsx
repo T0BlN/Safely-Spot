@@ -1,6 +1,7 @@
 import './Profile-Page.css';
 import { useState } from 'react';
 import SettingsMenu from '../../Components/Settings-Components/Settings-Menu.tsx';
+import YourPinsPage from '../Your-Pins-Page/Your-Pins-Page.tsx';
 import {Pin} from '../../Context/types.ts';
 import { useNavigate } from 'react-router-dom';
 
@@ -65,8 +66,8 @@ const ProfilePage = (props: ProfileProps) => {
             </section>
 
 
-            <section className="profile-section">
-
+            <section className="pins-section">
+                <YourPinsPage/>
             </section>
         </main>
         </div>
