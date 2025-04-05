@@ -1,12 +1,8 @@
 import './Your-Pins-Page.css'
-import { useNavigate } from 'react-router-dom';
 
 const YourPinsPage = () => {
-    const navigate = useNavigate();
 
-    const handleBack = () => {
-        navigate('/');
-    }
+
   // Sample data
   const yourPosts = [
     {
@@ -35,11 +31,10 @@ const YourPinsPage = () => {
 
   return (
     <div className="your-posts-page">
-      <h1 className="page-header">Your Pins</h1>
-      <button className="back-to-map-your-pins" onClick={handleBack}>Back to Map</button>
+      <h1 className="page-header">My Pins</h1>
       
       {yourPosts.length === 0 ? (
-        <div className="empty-state">You haven't made any pins yet.</div>
+        <div className="empty-state">No pins yet.</div>
       ) : (
         <div className="posts-list">
           {yourPosts.map(post => (

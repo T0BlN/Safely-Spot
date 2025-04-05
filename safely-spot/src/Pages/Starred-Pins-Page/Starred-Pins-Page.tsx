@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {FaStar, FaRegStar} from 'react-icons/fa'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './Starred-Pins-Page.css'
 
 const StarredPinsPage = () => {
@@ -10,11 +10,13 @@ const StarredPinsPage = () => {
     const handleBack = () => {
         navigate('/');
     }
+
+
   // Sample data
   const [starredPosts, setStarredPosts] = useState([
     {
       id: 1,
-      user: 'JaneDoe',
+      user: 'daniil',
       text: 'Check out this beautiful sunset from my hike yesterday!',
       date: '2023-05-15',
       likes: 24,
@@ -59,7 +61,7 @@ const StarredPinsPage = () => {
           {starredPosts.map(post => (
             <article key={post.id} className="post-card">
               <div className="post-header">
-                <span className="username">@{post.user}</span>
+                <Link className="username" to={{pathname: `/account/${post.user}`}}>@{post.user}</Link>
                 <span className="post-date">{post.date}</span>
               </div>
               
