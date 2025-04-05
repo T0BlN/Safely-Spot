@@ -10,6 +10,20 @@ import {
     savePinsToLocalStorage,
 } from './types';
 
+// Mock incident to display on the map (replace with actual data later)
+const mockIncident: Pin = {
+  id: '1',
+  position: {
+    lat: 42.3866, // Center coordinates from your Map.tsx
+    lng: -72.5314
+  },
+  title: 'Example Incident',
+  category: 'Alert',
+  description: 'This is an example incident to demonstrate how pins appear on the map.',
+  user: 'System',
+  comments: []
+};
+
 interface DataContext {
     users: User[];
     pins: Pin[];
@@ -36,7 +50,23 @@ interface DataProviderProps {
 
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     const [users, setUsers] = useState<User[]>(() => loadUsersFromLocalStorage());
-    const [pins, setPins] = useState<Pin[]>(() => loadPinsFromLocalStorage());
+    const [pins, setPins] = useState<Pin[]>(() => {
+        // Load pins from localStorage or initialize with the mock incident
+        const loadedPins = loadPinsFromLocalStorage();
+        
+        // If there are no pins in localStorage, include the mock incident
+        if (loadedPins.length === 0) {
+            return [mockIncident];
+        }
+        
+        // If there are pins but none with ID '1', add the mock incident
+        if (!loadedPins.some(pin => pin.id === '1')) {
+            return [...loadedPins, mockIncident];
+        }
+        
+        return loadedPins;
+    });
+    
     const [currentUser, setCurrentUser] = useState<User | null>(() => {
         const storedUser = localStorage.getItem('currentUser');
         const storedExpiresAt = localStorage.getItem('currentUserExpiresAt');

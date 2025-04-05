@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import './Map.css';
 import IncidentMarker from './IncidentMarker';
 import { useDataContext } from '../../Context/DataContext';
+import CurrentLocationButton from './CurrentLocationButton';
 
 const center = { lat: 42.3866, lng: -72.5314 };
 
@@ -34,6 +35,8 @@ const Map: React.FC = () => {
             category={pin.category}
           />
         ))}
+
+        <CurrentLocationButton />
       </MapContainer>
     </div>
   );
