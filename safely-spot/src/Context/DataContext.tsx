@@ -1,4 +1,3 @@
-// DataContext.tsx
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import {
     User,
@@ -40,6 +39,14 @@ interface DataContext {
 
     addComment: (pinId: string, comment: Comment) => void;
     removeComment: (pinId: string, commentIndex: number) => void;
+
+    addPinToUser: (username: string, pin: Pin) => void;
+    removePinFromUser: (username: string, pinId: string) => void;
+
+    addStarredPinToUser: (username: string, pin: Pin) => void;
+    removeStarredPinFromUser: (username: string, pinId: string) => void;
+
+    updateUserBio: (username: string, newBio: string) => void;
 }
 
 export const DataContext = createContext<DataContext | undefined>(undefined);
@@ -164,6 +171,86 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         });
     };
 
+    const addPinToUser = (username: string, newPin: Pin) => {
+        setUsers((prevUsers) => {
+        const updatedUsers = prevUsers.map((user) => {
+            if (user.username === username) {
+            return {
+                ...user,
+                pins: [...user.pins, newPin],
+            };
+            }
+            return user;
+        });
+        saveUsersToLocalStorage(updatedUsers);
+        return updatedUsers;
+        });
+    };
+    
+    const removePinFromUser = (username: string, pinId: string) => {
+        setUsers((prevUsers) => {
+        const updatedUsers = prevUsers.map((user) => {
+            if (user.username === username) {
+            return {
+                ...user,
+                pins: user.pins.filter((pin) => pin.id !== pinId),
+            };
+            }
+            return user;
+        });
+        saveUsersToLocalStorage(updatedUsers);
+        return updatedUsers;
+        });
+    };
+    
+    const addStarredPinToUser = (username: string, newPin: Pin) => {
+        setUsers((prevUsers) => {
+        const updatedUsers = prevUsers.map((user) => {
+            if (user.username === username) {
+            return {
+                ...user,
+                starredPins: [...user.starredPins, newPin],
+            };
+            }
+            return user;
+        });
+        saveUsersToLocalStorage(updatedUsers);
+        return updatedUsers;
+        });
+    };
+    
+    const removeStarredPinFromUser = (username: string, pinId: string) => {
+        setUsers((prevUsers) => {
+        const updatedUsers = prevUsers.map((user) => {
+            if (user.username === username) {
+            return {
+                ...user,
+                starredPins: user.starredPins.filter((pin) => pin.id !== pinId),
+            };
+            }
+            return user;
+        });
+        saveUsersToLocalStorage(updatedUsers);
+        return updatedUsers;
+        });
+    };
+    
+    const updateUserBio = (username: string, newBio: string) => {
+        setUsers((prevUsers) => {
+        const updatedUsers = prevUsers.map((user) => {
+            if (user.username === username) {
+            return {
+                ...user,
+                bio: newBio,
+            };
+            }
+            return user;
+        });
+        saveUsersToLocalStorage(updatedUsers);
+        return updatedUsers;
+        });
+    };
+
     const contextValue: DataContext = {
         users,
         currentUser,
@@ -176,6 +263,11 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         editPin,
         addComment,
         removeComment,
+        addPinToUser,
+        removePinFromUser,
+        addStarredPinToUser,
+        removeStarredPinFromUser,
+        updateUserBio,
     };
 
     return (
