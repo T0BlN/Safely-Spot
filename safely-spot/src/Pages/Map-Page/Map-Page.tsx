@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDataContext } from '../../Context/DataContext';
 import Map from '../../Components/Map-Components/Map';
 import MapMenu from '../../Components/Map-Components/MapMenu';
 import NewIncidentButton from '../../Components/Map-Components/NewIncidentButton';
@@ -8,6 +9,7 @@ import './Map-Page.css';
 const MapPage: React.FC = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { currentUser } = useDataContext();
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
@@ -17,7 +19,7 @@ const MapPage: React.FC = () => {
     navigate('/report-incident');
   };
   const goToAccount = () => {
-    navigate('/account');
+    navigate(`/account/:${currentUser?.username}`);
   };
   const goToSettings = () => {
     navigate('/settings');
