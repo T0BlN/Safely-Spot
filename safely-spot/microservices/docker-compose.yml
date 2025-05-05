@@ -1,0 +1,27 @@
+version: "3.9"
+name: microstack
+
+services:
+  registry:
+    build:
+      context: ./registry
+      dockerfile: Dockerfile
+    container_name: registry
+    networks: [ skynet ]
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    container_name: api-gateway
+    depends_on: [ registry ]
+    networks: [ skynet ]
+    ports: [ "3000:3000" ]
+    environment:
+      - REGISTRY_URL=http://registry:3000
+
+  # Future services go here:
+
+networks:
+  skynet:
+    driver: bridge
