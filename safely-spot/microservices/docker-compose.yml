@@ -20,6 +20,15 @@ services:
     environment:
       - REGISTRY_URL=http://registry:3000
 
+  pins-service:
+    build:
+      context: ./pins-service
+      dockerfile: Dockerfile
+    container_name: pins-service
+    depends_on: [ registry ]
+    networks: [ skynet ]
+    ports: [ "4000:4000" ]
+
   # Future services go here:
 
 networks:

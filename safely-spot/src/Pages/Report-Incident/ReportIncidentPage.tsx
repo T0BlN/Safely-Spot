@@ -35,11 +35,31 @@ const ReportIncidentPage: React.FC = () => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Save the form data to localStorage
-    localStorage.setItem('incidentData', JSON.stringify(formData));
-    console.log('Submitted data stored in localStorage:', formData);
+    
+    //ls
+    // localStorage.setItem('incidentData', JSON.stringify(formData));
+    // console.log('Submitted data stored in localStorage:', formData);
+
+    try {
+      const response = await fetch('http://localhost:3000/pins', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Successfully submitted data to backend:', data);
+      } else {
+        console.error('Failed to submit data to backend:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error during API call:', error);
+    }
   };
 
   const handleCancel = () => {

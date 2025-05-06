@@ -1,5 +1,6 @@
 import express from "express";
 import { pino } from "pino";
+import cors from 'cors';
 
 const PORT = 3000;
 const REGISTRY = "http://registry:3000";
@@ -7,6 +8,13 @@ const REGISTRY = "http://registry:3000";
 const log = pino({ transport: { target: "pino-pretty" } });
 const app = express();
 app.use(express.json());
+
+//this snippet allows for cors requests from the frontend
+app.use(cors({
+  origin: 'http://localhost:5173', //route we run our code on
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type'],
+}));
 
 async function proxy(service: string, req: express.Request, res: express.Response) {
     const look = await fetch(`${REGISTRY}/lookup?name=${service}`);
@@ -30,6 +38,33 @@ async function proxy(service: string, req: express.Request, res: express.Respons
 /* Add routes for services here:
 
 */
+
+// Forward GET /pins to pins-service
+app.get('/pins', async (req, res) => {
+    try {
+        const response = await fetch('http://pins-service:4000/pins');
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        log.error(error);
+        res.status(500).json({ error: 'Failed to fetch pins from pins-service' });
+    }
+});
+
+app.post('/pins', async (req, res) => {
+    try {
+        const response = await fetch('http://pins-service:4000/pins', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(req.body),
+        });
+        const data = await response.json();
+        res.status(response.status).json(data);
+    } catch (error) {
+        log.error(error);
+        res.status(500).json({ error: 'Failed to add pin to pins-service' });
+    }
+});
 
 app.listen(PORT, () => {
     log.info(`API-Gateway listening on ${PORT}`);
