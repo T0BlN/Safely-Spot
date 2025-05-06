@@ -29,6 +29,14 @@ services:
     networks: [ skynet ]
     ports: [ "4000:4000" ]
 
+  service-weather:
+    build:
+      context: ./service-weather
+      dockerfile: Dockerfile
+    container_name: service-weather
+    depends_on: [ registry ]
+    networks: [ skynet ]
+
   # Future services go here:
 
 networks:
