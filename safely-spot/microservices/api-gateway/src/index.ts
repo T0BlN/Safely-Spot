@@ -35,9 +35,8 @@ async function proxy(service: string, req: express.Request, res: express.Respons
     }
 }
 
-/* Add routes for services here:
-
-*/
+// Add routes for services here:
+app.post("/weather", (req, res) => proxy("service-weather", req, res));
 
 // Forward GET /pins to pins-service
 app.get('/pins', async (req, res) => {

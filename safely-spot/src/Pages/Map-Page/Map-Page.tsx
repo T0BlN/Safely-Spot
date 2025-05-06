@@ -4,6 +4,7 @@ import { useDataContext } from '../../Context/DataContext';
 import Map from '../../Components/Map-Components/Map';
 import MapMenu from '../../Components/Map-Components/MapMenu';
 import NewIncidentButton from '../../Components/Map-Components/NewIncidentButton';
+import WeatherWidget from '../../Components/Map-Components/WeatherWidget';
 import './Map-Page.css';
 
 const MapPage: React.FC = () => {
@@ -35,6 +36,8 @@ const MapPage: React.FC = () => {
         goToAccount={goToAccount}
         goToSettings={goToSettings}
       />
+
+      <WeatherWidget />
 
       <NewIncidentButton onClick={goToCreateIncident} />
     </div>
