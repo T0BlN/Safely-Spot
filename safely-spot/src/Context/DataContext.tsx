@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
+//imports all of the created types
 import {
     User,
     Pin,
@@ -23,6 +24,7 @@ const mockIncident: Pin = {
   comments: []
 };
 
+//interface to define arrays for user, pins, and functions
 interface DataContext {
     users: User[];
     pins: Pin[];
@@ -74,6 +76,8 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         return loadedPins;
     });
     
+    //current user function
+    //necessary for keeping track of who is using the application so that data for speicifc users can be loaded
     const [currentUser, setCurrentUser] = useState<User | null>(() => {
         const storedUser = localStorage.getItem('currentUser');
         const storedExpiresAt = localStorage.getItem('currentUserExpiresAt');
@@ -82,6 +86,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
           return null; 
         }
       
+        //sets up a expiration time in order to log out a user after some time
         const expiresAt = parseInt(storedExpiresAt, 10);
         const now = Date.now();
       
@@ -102,6 +107,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         });
     };
 
+    //simple functions to add, remove, and edit various attributes of the application
     const removeUser = (username: string) => {
         setUsers((prev) => {
         const updated = prev.filter((user) => user.username !== username);
@@ -275,7 +281,7 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     );
 };
 
-
+//exports a "useDataContext" so that it can be used throughout the application instead of accessing local storage through each component
 export const useDataContext = (): DataContext => {
     const context = useContext(DataContext);
     if (!context) {
