@@ -1,3 +1,5 @@
+//setup for types to be used throughout application
+
 export interface User {
     username: string;
     password: string;
