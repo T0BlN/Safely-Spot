@@ -14,7 +14,9 @@ services:
       context: ./api-gateway
       dockerfile: Dockerfile
     container_name: api-gateway
-    depends_on: [ registry ]
+    depends_on:  
+      - registry
+      - auth-service
     networks: [ skynet ]
     ports: [ "3000:3000" ]
     environment:
@@ -38,7 +40,33 @@ services:
     networks: [ skynet ]
 
   # Future services go here:
+  auth-service:
+    build: ./auth-service-py
+    container_name: auth
+    environment:
+      POSTGRES_HOST: auth-db
+      POSTGRES_DB: auth
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+    depends_on:
+      - auth-pg
+    networks:
+      - skynet
+    
+  auth-pg:
+    build: ./auth-pg
+    container_name: auth-pg
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: auth_user
+      POSTGRES_PASSWORD: auth_password
+    volumes:
+      - user_data:/var/lib/postgresql/data
+
 
 networks:
   skynet:
     driver: bridge
+
+volumes:
+  user_data:
