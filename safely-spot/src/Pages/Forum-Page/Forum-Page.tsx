@@ -19,8 +19,8 @@ const fallbackIncident = {
 const ForumPage: React.FC = () => {
   const { incidentId } = useParams<{ incidentId: string }>();
   const navigate = useNavigate();
-  const { pins, currentUser, addComment } = useDataContext();
-  
+  const { pins, currentUser } = useDataContext();
+
   // Find the current incident from pins data
   const currentIncident = useMemo(() => {
     return pins.find(pin => pin.id === incidentId) || null;
@@ -29,91 +29,69 @@ const ForumPage: React.FC = () => {
   // Convert pin data to incident format needed by IncidentDetails
   const incidentData = useMemo(() => {
     if (!currentIncident) return fallbackIncident;
-    
     return {
       id: currentIncident.id,
       title: currentIncident.title,
       description: currentIncident.description,
       location: `${currentIncident.position.lat.toFixed(4)}, ${currentIncident.position.lng.toFixed(4)}`,
       category: currentIncident.category,
-      date: new Date().toISOString().split('T')[0] // Using today's date as a fallback
+      date: new Date().toISOString().split('T')[0]
     };
   }, [currentIncident]);
 
-  // Get comments from the incident
-  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('oldest');
-  
-  // Use comments from the current incident if available
-  const incidentComments = useMemo(() => {
-    // Generate timestamps spaced one minute apart for better sorting
-    const baseTime = Date.now();
-    
-    return currentIncident?.comments?.map((comment, index) => {
-      // Create timestamps spaced apart for proper sorting
-      // Most recent comments will be newest (higher timestamp)
-      const commentTime = new Date(baseTime - (currentIncident.comments.length - index) * 60000);
-      
-      return {
-        id: `comment-${index}-${Math.random().toString().slice(2)}`,
-        author: comment.user,
-        text: comment.text,
-        timestamp: commentTime.toISOString()
-      };
-    }) || [];
-  }, [currentIncident]);
+  // --- NEW: Fetch comments from backend ---
+  const [comments, setComments] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Local state for comments to enable immediate UI updates
-  const [localComments, setLocalComments] = useState(incidentComments);
-
-  // Update local comments when incident data changes
   useEffect(() => {
-    setLocalComments(incidentComments);
-  }, [incidentComments]);
-  
-  const handleAddComment = (commentText: string) => {
+    if (!incidentId) return;
+    setLoading(true);
+    fetch(`http://localhost:3000/comments/${incidentId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setComments(data);
+        } else {
+          setComments([]);
+          // Optionally show an error message
+        }
+      })
+      .catch(() => setComments([]))
+      .finally(() => setLoading(false));
+  }, [incidentId]);
+
+  const handleAddComment = async (commentText: string) => {
     if (!currentIncident || !currentUser) return;
-    
-    // Create comment object for DataContext
-    const dataContextComment = {
-      user: currentUser.username,
-      text: commentText
-    };
-    
-    // Add comment through DataContext
-    addComment(currentIncident.id, dataContextComment);
-    
-    // Update local state for immediate UI feedback
     const newComment = {
-      id: `new-comment-${Date.now()}`,
-      author: currentUser.username,
+      user: currentUser.username,
       text: commentText,
-      timestamp: new Date().toISOString() // Current time for new comments
     };
-    
-    setLocalComments([...localComments, newComment]);
-  };
-  
-  const handleBack = () => {
-    navigate('/');
+    const res = await fetch(`http://localhost:3000/comments/${incidentId}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newComment),
+    });
+    if (res.ok) {
+      const saved = await res.json();
+      setComments([...comments, saved]);
+    }
   };
 
-  const handleSortChange = (newSortOrder: 'newest' | 'oldest') => {
-    setSortOrder(newSortOrder);
-  };
+  const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('oldest');
+  const handleSortChange = (newSortOrder: 'newest' | 'oldest') => setSortOrder(newSortOrder);
 
   const sortedComments = useMemo(() => {
-    return [...localComments].sort((a, b) => {
+    return [...comments].sort((a, b) => {
       const dateA = new Date(a.timestamp).getTime();
       const dateB = new Date(b.timestamp).getTime();
       return sortOrder === 'newest' ? dateB - dateA : dateA - dateB;
     });
-  }, [localComments, sortOrder]);
+  }, [comments, sortOrder]);
 
-  // Show a message if incident not found
   if (!currentIncident && incidentId !== "1") {
     return (
       <div className="forum-page">
-        <button className="back-button" onClick={handleBack}>Back to Map</button>
+        <button className="back-button" onClick={() => navigate('/')}>Back to Map</button>
         <h2>Incident Not Found</h2>
         <p>The incident you are looking for could not be found.</p>
       </div>
@@ -122,13 +100,20 @@ const ForumPage: React.FC = () => {
 
   return (
     <div className="forum-page">
-      <button className="back-button" onClick={handleBack}>Back to Map</button>
+      <button className="back-button" onClick={() => navigate('/')}>Back to Map</button>
       <IncidentDetails incident={incidentData} />
-      <CommentList 
-        comments={sortedComments} 
-        sortOrder={sortOrder}
-        onSortChange={handleSortChange}
-      />
+      {loading ? <p>Loading comments...</p> : (
+        <CommentList 
+          comments={sortedComments.map(c => ({
+            id: c.id,
+            author: c.user,
+            text: c.text,
+            timestamp: c.timestamp,
+          }))}
+          sortOrder={sortOrder}
+          onSortChange={handleSortChange}
+        />
+      )}
       <CommentForm onAddComment={handleAddComment} />
     </div>
   );
