@@ -39,6 +39,15 @@ services:
     depends_on: [ registry ]
     networks: [ skynet ]
 
+  forum-service:
+    build:
+      context: ./forum-service
+      dockerfile: Dockerfile
+    container_name: forum-service
+    depends_on: [ registry ]
+    networks: [ skynet ]
+    ports: [ "5001:5001" ]
+
   # Future services go here:
   auth-service:
     build: ./auth-service-py

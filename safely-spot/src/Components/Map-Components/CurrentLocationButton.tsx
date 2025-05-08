@@ -4,31 +4,35 @@ import { FaLocationArrow } from 'react-icons/fa';
 import './CurrentLocationButton.css'
 
 const CurrentLocationButton: React.FC = () => {
-const map = useMap();
+    const map = useMap();
 
-const handleCenterOnUser = () => {
-    if (!navigator.geolocation) {
-    alert('Geolocation is not supported by your browser.');
-    return;
-    }
+    //function to find users location and move the center of the map to that location
+    const handleCenterOnUser = () => {
+        //checks if browser supports location
+        if (!navigator.geolocation) {
+            alert('Geolocation is not supported by your browser.');
+            return;
+        }
 
-    navigator.geolocation.getCurrentPosition(
-    (position) => {
-        const { latitude, longitude } = position.coords;
-        map.flyTo([latitude, longitude], 13); 
-    },
-    (error) => {
-        console.error(error);
-        alert('Unable to retrieve your location.');
-    }
+        //finds location and moves map center
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const { latitude, longitude } = position.coords;
+                map.flyTo([latitude, longitude], 13); 
+            },
+            (error) => {
+                console.error(error);
+                alert('Unable to retrieve your location.');
+            }
+        );
+    };
+
+    //returns a button with handler function on click
+    return (
+        <button className="locate-button" onClick={handleCenterOnUser}>
+            <FaLocationArrow className="locate-icon" />
+        </button>
     );
-};
-
-return (
-    <button className="locate-button" onClick={handleCenterOnUser}>
-        <FaLocationArrow className="locate-icon" />
-    </button>
-);
 };
 
 export default CurrentLocationButton;

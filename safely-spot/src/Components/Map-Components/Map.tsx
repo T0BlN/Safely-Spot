@@ -6,13 +6,17 @@ import IncidentMarker from './IncidentMarker';
 import { useDataContext } from '../../Context/DataContext';
 import CurrentLocationButton from './CurrentLocationButton';
 
+//default center
 const center = { lat: 42.3866, lng: -72.5314 };
 
 const Map: React.FC = () => {
+  //use pins from data context
   const { pins } = useDataContext();
   
+  //returns map using leaflet
   return (
     <div className="map-wrapper">
+      {/* default leaflet setup */}
       <MapContainer
         center={[center.lat, center.lng]}
         zoom={13}
@@ -26,6 +30,7 @@ const Map: React.FC = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         
+        {/* Maps the pins that exist in the data context onto the map */}
         {pins.map((pin) => (
           <IncidentMarker
             key={pin.id}
@@ -36,6 +41,7 @@ const Map: React.FC = () => {
           />
         ))}
 
+        {/* imported current location component */}
         <CurrentLocationButton />
       </MapContainer>
     </div>

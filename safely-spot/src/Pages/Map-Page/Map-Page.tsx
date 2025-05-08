@@ -8,14 +8,15 @@ import WeatherWidget from '../../Components/Map-Components/WeatherWidget';
 import './Map-Page.css';
 
 const MapPage: React.FC = () => {
+  //useState, navigation, and data context declarations
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const { currentUser } = useDataContext();
 
+  //simple functions for navigation and rendering menu component
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
   };
-
   const goToCreateIncident = () => {
     navigate('/report-incident');
   };
@@ -26,6 +27,7 @@ const MapPage: React.FC = () => {
     navigate('/settings');
   };
 
+  //return imported components (map, map menu, weather widget, and new incident button)
   return (
     <div className="map-page-container">
       <Map />

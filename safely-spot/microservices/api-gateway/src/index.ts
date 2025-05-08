@@ -65,6 +65,33 @@ app.post('/pins', async (req, res) => {
     }
 });
 
+// Proxy GET /comments/:pinId and POST /comments/:pinId to forum-service
+app.get('/comments/:pinId', async (req, res) => {
+    try {
+        const response = await fetch('http://forum-service:5001/comments/' + req.params.pinId);
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        log.error(error);
+        res.status(500).json({ error: 'Failed to fetch comments from forum-service' });
+    }
+});
+
+app.post('/comments/:pinId', async (req, res) => {
+    try {
+        const response = await fetch('http://forum-service:5001/comments/' + req.params.pinId, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(req.body),
+        });
+        const data = await response.json();
+        res.status(response.status).json(data);
+    } catch (error) {
+        log.error(error);
+        res.status(500).json({ error: 'Failed to add comment to forum-service' });
+    }
+});
+
 app.listen(PORT, () => {
     log.info(`API-Gateway listening on ${PORT}`);
     fetch(`${REGISTRY}/register`, {

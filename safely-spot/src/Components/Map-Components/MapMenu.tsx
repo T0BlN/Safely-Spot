@@ -1,6 +1,7 @@
 import React from 'react';
 import './MapMenu.css';
 
+//props for the menu
 interface MapMenuProps {
   menuOpen: boolean;
   onToggleMenu: () => void;
@@ -8,12 +9,8 @@ interface MapMenuProps {
   goToSettings: () => void;
 }
 
-const MapMenu: React.FC<MapMenuProps> = ({
-  menuOpen,
-  onToggleMenu,
-  goToAccount,
-  goToSettings
-}) => {
+const MapMenu: React.FC<MapMenuProps> = ({ menuOpen, onToggleMenu, goToAccount, goToSettings }) => {
+  //menu with handlers for navigation
   return (
     <>
       <button className="menu-toggle-button" onClick={onToggleMenu}>
