@@ -50,27 +50,34 @@ services:
 
   # Future services go here:
   auth-service:
-    build: ./auth-service-py
-    container_name: auth
+    build: ./auth-service
+    container_name: auth-service
     environment:
       POSTGRES_HOST: auth-db
       POSTGRES_DB: auth
-      POSTGRES_USER: auth_user
-      POSTGRES_PASSWORD: auth_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "4001:4001"
     depends_on:
-      - auth-pg
+      - auth-db
     networks:
       - skynet
     
-  auth-pg:
-    build: ./auth-pg
-    container_name: auth-pg
+  auth-db:
+    image: postgres:15-alpine
+    build: ./auth-db
+    container_name: auth-db
+    ports: 
+    - "5432:5432"
     environment:
       POSTGRES_DB: auth
-      POSTGRES_USER: auth_user
-      POSTGRES_PASSWORD: auth_password
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
       - user_data:/var/lib/postgresql/data
+    networks:
+      - skynet
 
 
 networks:

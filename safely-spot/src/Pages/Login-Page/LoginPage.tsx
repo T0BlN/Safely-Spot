@@ -11,7 +11,7 @@ const LoginPage: React.FC = () => {
 
   const { users, setCurrentUser } = useDataContext();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const user = users.find((u) => u.username === username && u.password === password);
 
